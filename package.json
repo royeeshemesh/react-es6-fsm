@@ -9,6 +9,12 @@
     "type": "git",
     "url": "https://github.com/flexpert/react-es6-fsm"
   },
+  "maintainers": [
+    {
+      "name": "Royee Shemesh",
+      "email": "royee@flexpert.co.il"
+    }
+  ],
   "keywords": [
     "slick",
     "carousel",
