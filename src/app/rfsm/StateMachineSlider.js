@@ -8,7 +8,7 @@ class StateMachineSlider extends Component {
   constructor(props) {
     super(props);
 
-    this.stateMachine = new StateMachine();
+    this.stateMachine = new StateMachine({ onBeforeEnterState: props.onBeforeEnterState, onBeforeExitState: props.onBeforeExitState });
 
     this.stateMachine.on(StateMachine.Events.ON_BEFORE_ENTER_STATE, (state) => {
       console.info(StateMachine.Events.ON_BEFORE_ENTER_STATE, state.name);

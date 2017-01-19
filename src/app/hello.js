@@ -145,6 +145,14 @@ export class Hello extends Component {
   //   })
   // }
 
+  onBeforeEnterState(state) {
+    console.info(1, state);
+  }
+
+  onBeforeExitState(state) {
+    console.info(2, state);
+  }
+
   render() {
     const settings = {
         dots: false,
@@ -172,7 +180,8 @@ export class Hello extends Component {
 
       <div>
 
-        <StateMachineSlider initialState={viewLoadingState}/>
+        <StateMachineSlider initialState={viewLoadingState} onBeforeEnterState={this.onBeforeEnterState} onBeforeExitState={this.onBeforeExitState}/>
+
 
         {/*<Slider {...settings} ref="slider">
           <div key="placeholder"/>
