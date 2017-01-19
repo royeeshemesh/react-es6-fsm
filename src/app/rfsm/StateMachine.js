@@ -53,8 +53,8 @@ class StateMachine extends EventEmitter {
 
     setTimeout(() => {
       if (!!transition.from) {
-        if (!!self.onBeforeEnterState) {
-          self.onBeforeEnterState(transition.from);
+        if (!!self.onBeforeExitState) {
+          self.onBeforeExitState(transition.from);
         } else {
           self.emit(StateMachine.Events.ON_BEFORE_EXIT_SATE, transition.from);
         }
@@ -63,7 +63,7 @@ class StateMachine extends EventEmitter {
 
     setTimeout(() => {
       if (!!self.onBeforeEnterState) {
-        self.onBeforeEnterState();
+        self.onBeforeEnterState(transition.to);
       } else {
         self.emit(StateMachine.Events.ON_BEFORE_ENTER_STATE, transition.to);
       }

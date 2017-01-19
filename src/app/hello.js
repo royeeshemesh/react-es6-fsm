@@ -146,11 +146,11 @@ export class Hello extends Component {
   // }
 
   onBeforeEnterState(state) {
-    console.info(1, state);
+    console.info('enter', state);
   }
 
   onBeforeExitState(state) {
-    console.info(2, state);
+    console.info('exit', state);
   }
 
   render() {
