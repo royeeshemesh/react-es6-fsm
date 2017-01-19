@@ -15,6 +15,8 @@ import ViewState from './rfsm/ViewState';
 import ActionState from './rfsm/ActionState';
 import Transition from './rfsm/Transition';
 
+import StateMachineSlider  from './rfsm/StateMachineSlider'
+
 const detectPreSelectedPaymentMethodState = new ActionState({
   name: 'detectPreSelectedPaymentMethodState',
   action: DetectPreSelectedPaymentMethod,
@@ -99,42 +101,42 @@ export class Hello extends Component {
   constructor(props) {
     super(props);
 
-    this.stateMachine = new StateMachine();
-    this.stateMachine.on(StateMachine.Events.ON_BEFORE_ENTER_STATE, (state) => {
-      console.info(StateMachine.Events.ON_BEFORE_ENTER_STATE, state.name);
-    });
-
-    this.stateMachine.on(StateMachine.Events.ON_BEFORE_EXIT_SATE, (state) => {
-      console.info(StateMachine.Events.ON_BEFORE_EXIT_SATE, state.name);
-    });
+    // this.stateMachine = new StateMachine();
+    // this.stateMachine.on(StateMachine.Events.ON_BEFORE_ENTER_STATE, (state) => {
+    //   console.info(StateMachine.Events.ON_BEFORE_ENTER_STATE, state.name);
+    // });
+    //
+    // this.stateMachine.on(StateMachine.Events.ON_BEFORE_EXIT_SATE, (state) => {
+    //   console.info(StateMachine.Events.ON_BEFORE_EXIT_SATE, state.name);
+    // });
 
     this.state = {
       slides: List.fromJS([])
     };
 
-    this.handleEvent = this.handleEvent.bind(this);
+    // this.handleEvent = this.handleEvent.bind(this);
   }
 
-  componentDidMount() {
-    this.sliderView = this.refs.slider;
-    this.stateMachine.start({slider: this, initialState: viewLoadingState});
-  }
+  // componentDidMount() {
+  //   this.sliderView = this.refs.slider;
+  //   this.stateMachine.start({slider: this, initialState: viewLoadingState});
+  // }
 
-  handleEvent(event) {
-    this.setState({
-      slides: this.state.slides.push({
-        event
-      })
-    }, () => {
-      this.next();
-    });
-  }
-
-  next() {
-    setTimeout(() => {
-      this.sliderView.slickNext();
-    })
-  }
+  // handleEvent(event) {
+  //   this.setState({
+  //     slides: this.state.slides.push({
+  //       event
+  //     })
+  //   }, () => {
+  //     this.next();
+  //   });
+  // }
+  //
+  // next() {
+  //   setTimeout(() => {
+  //     this.sliderView.slickNext();
+  //   })
+  // }
 
   render() {
     const settings = {
@@ -163,10 +165,12 @@ export class Hello extends Component {
 
       <div>
 
-        <Slider {...settings} ref="slider">
+        <StateMachineSlider initialState={viewLoadingState}/>
+
+        {/*<Slider {...settings} ref="slider">
           <div key="placeholder"/>
           {getSlides()}
-        </Slider>
+        </Slider>*/}
         {/*<div style={{textAlign: 'center'}}>
           <button className='button' onClick={() => this.refs.slider.slickPrev()}>Previous</button>
           <button className='button' onClick={() => this.refs.slider.slickNext()}>Next</button>
