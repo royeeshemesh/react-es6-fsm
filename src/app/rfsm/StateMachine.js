@@ -12,11 +12,13 @@ class StateMachine extends EventEmitter {
     UNKNOWN_STATE_TYPE: 'unknownStateType'
   };
 
-  constructor() {
+  constructor({ onBeforeEnterState, onBeforeExitState }) {
     super();
 
     this.start = this.start.bind(this);
     this.next = this.next.bind(this);
+    this.onBeforeEnterState = onBeforeEnterState;
+    this.onBeforeExitState = onBeforeExitState;
 
     this.breadCrumb = [];
   }
@@ -51,12 +53,20 @@ class StateMachine extends EventEmitter {
 
     setTimeout(() => {
       if (!!transition.from) {
-        self.emit(StateMachine.Events.ON_BEFORE_EXIT_SATE, transition.from);
+        if (!!self.onBeforeEnterState) {
+          self.onBeforeEnterState(transition.from);
+        } else {
+          self.emit(StateMachine.Events.ON_BEFORE_EXIT_SATE, transition.from);
+        }
       }
     });
 
     setTimeout(() => {
-      self.emit(StateMachine.Events.ON_BEFORE_ENTER_STATE, transition.to);
+      if (!!self.onBeforeEnterState) {
+        self.onBeforeEnterState();
+      } else {
+        self.emit(StateMachine.Events.ON_BEFORE_ENTER_STATE, transition.to);
+      }
     });
 
     setTimeout(() => {

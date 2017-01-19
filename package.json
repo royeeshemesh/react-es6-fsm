@@ -95,6 +95,13 @@
     "test": "gulp test",
     "test:auto": "gulp test:auto"
   },
+  "babel": {
+    "presets": [
+      "react",
+      "es2015",
+      "stage-0"
+    ]
+  },
   "eslintConfig": {
     "root": true,
     "env": {
@@ -104,13 +111,6 @@
     "extends": [
       "xo-react/space",
       "xo-space/esnext"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react",
-      "es2015",
-      "stage-0"
     ]
   }
 }

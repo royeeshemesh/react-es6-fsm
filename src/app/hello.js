@@ -10,12 +10,19 @@ import EnterAccountNumber from './components/EnterAccountNumber';
 import Type3 from './components/Type3';
 import List from 'immutable';
 
-import StateMachine from './rfsm/StateMachine';
-import ViewState from './rfsm/ViewState';
-import ActionState from './rfsm/ActionState';
-import Transition from './rfsm/Transition';
+// import StateMachine from './rfsm/StateMachine';
+// import ViewState from './rfsm/ViewState';
+// import ActionState from './rfsm/ActionState';
+// import Transition from './rfsm/Transition';
+//
+// import StateMachineSlider  from './rfsm/StateMachineSlider'
 
-import StateMachineSlider  from './rfsm/StateMachineSlider'
+// import StateMachineSlider from '../../lib/StateMachineSlider'
+// import ViewState from '../../lib/ViewState';
+// import ActionState from '../../lib/ActionState';
+// import Transition from '../../lib/Transition';
+
+import { StateMachineSlider, ViewState, ActionState, Transition } from '../../lib/index';
 
 const detectPreSelectedPaymentMethodState = new ActionState({
   name: 'detectPreSelectedPaymentMethodState',

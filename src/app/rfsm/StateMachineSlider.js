@@ -79,7 +79,9 @@ class StateMachineSlider extends Component {
 }
 
 StateMachineSlider.propTypes = {
-  initialState: PropTypes.instanceOf(ViewState).isRequired
+  initialState: PropTypes.instanceOf(ViewState).isRequired,
+  onBeforeEnterState: PropTypes.func,
+  onBeforeExitState: PropTypes.func
 };
 
 export default StateMachineSlider;
