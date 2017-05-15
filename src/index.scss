@@ -1,3 +1,64 @@
+@import "./app/rfsm/rfsm";
+
 body {
-  background-color: lightgrey;
+  background-color: white;
+}
+
+.loading-symbol {
+  color: transparent !important;
+  border-color: transparent !important;
+  position: relative !important;
+  cursor: default !important;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+
+  &::after {
+    content: "";
+    position: absolute;
+    border: 5px solid #ccc;
+    border-left-color: #f2f2f2;
+    border-top-color: #f2f2f2;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -50%;
+    margin-top: -50%;
+    width: 100%;
+    height: 100%;
+    -webkit-animation: spin .7s linear infinite;
+    -moz-animation: spin .7s linear infinite;
+    -o-animation: spin .7s linear infinite;
+    animation: spin .7s linear infinite;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+
+@-moz-keyframes spin {
+  from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+
+.toolbar {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    margin-right: 10px;
+  }
 }

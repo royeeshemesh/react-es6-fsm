@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Action from './Action';
 import ActionState from './ActionState';
 import Event from './Event';

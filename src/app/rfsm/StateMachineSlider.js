@@ -1,14 +1,27 @@
-import React, {Component, PropTypes} from 'react';
-import Slider from 'react-slick';
-import StateMachine from './StateMachine';
-import ViewState from './ViewState';
-import List from 'immutable';
+/* eslint-disable */
 
-class StateMachineSlider extends Component {
+import React from 'react';
+import StateMachine from './StateMachine';
+import State from './State';
+import Transition from './Transition';
+
+const ReactCSSTransitionGroup = React.addons ? React.addons.CSSTransitionGroup : require('react-addons-css-transition-group');
+
+class StateMachineSlider extends React.Component {
+  static propTypes = {
+    initialState: React.PropTypes.instanceOf(State).isRequired,
+    onBeforeEnterState: React.PropTypes.func,
+    onBeforeExitState: React.PropTypes.func
+  };
+
   constructor(props) {
     super(props);
 
-    this.stateMachine = new StateMachine({ onBeforeEnterState: props.onBeforeEnterState, onBeforeExitState: props.onBeforeExitState });
+    this.stateMachine = new StateMachine({
+      model: props.model,
+      onBeforeEnterState: props.onBeforeEnterState,
+      onBeforeExitState: props.onBeforeExitState
+    });
 
     this.stateMachine.on(StateMachine.Events.ON_BEFORE_ENTER_STATE, (state) => {
       console.info(StateMachine.Events.ON_BEFORE_ENTER_STATE, state.name);
@@ -19,69 +32,64 @@ class StateMachineSlider extends Component {
     });
 
     this.state = {
-      slides: List.fromJS([])
+      slide: null,
+      error: null,
+      event: null
     };
 
     this.handleEvent = this.handleEvent.bind(this);
   }
 
   componentDidMount() {
-    this.sliderView = this.refs.slider;
-    this.stateMachine.start({slider: this, initialState: this.props.initialState});
+    this.setState({
+      slide: this.props.Loading
+    }, () => {
+      this.stateMachine.start({slider: this, initialState: this.props.initialState});
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.refresh.bind(this), true);
   }
 
   handleEvent(event) {
     this.setState({
-      slides: this.state.slides.push({
-        event
-      })
-    }, () => {
-      this.next();
+      slide: event.state.view,
+      event: event
     });
   }
 
-  next() {
-    setTimeout(() => {
-      this.sliderView.slickNext();
-    })
+  handleError(error) {
+    this.setState({
+      error: error
+    });
   }
 
   render() {
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        adaptiveHeight: true
-      },
-      self = this;
+    const Slide = this.state.slide;
+    if (!Slide) return null;
 
-    const getSlides = function () {
+    const {event, error} = this.state;
 
-      return self.state.slides.map((descriptor, index) => {
-        const View = descriptor.event.state.view;
-        return (
-          <div key={index}>
-            <View event={descriptor.event}/>
-          </div>
-        )
-      })
-    };
+    const name = event ? event.state.name : 'loading';
+
+    const direction = event && event.direction ? event.direction : Transition.Directions.LEFT;
 
     return (
-      <Slider {...settings} ref="slider">
-        <div key="placeholder"/>
-        {getSlides()}
-      </Slider>
+      <div className="rfsm-slider">
+        <ReactCSSTransitionGroup
+          component="div"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+          transitionName={`slide-${direction}`}>
+
+          <div className="rfsm-slide" key={name}>
+            <Slide event={event} error={error}/>
+          </div>
+
+        </ReactCSSTransitionGroup>
+      </div>
     );
   }
 }
-
-StateMachineSlider.propTypes = {
-  initialState: PropTypes.instanceOf(ViewState).isRequired,
-  onBeforeEnterState: PropTypes.func,
-  onBeforeExitState: PropTypes.func
-};
-
 export default StateMachineSlider;
