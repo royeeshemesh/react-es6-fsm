@@ -1,3 +1,16 @@
+@import "./app/rfsm/rfsm";
+
 body {
-  background-color: lightgrey;
+}
+
+.slide {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  padding: 20px;
+
+  button {
+    margin-right: 10px;
+    cursor: pointer;
+  }
 }

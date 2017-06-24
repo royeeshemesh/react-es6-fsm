@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import State from './State';
 
 export const Events = {};
