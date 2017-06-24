@@ -25,10 +25,12 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/,
-        loaders: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: 'css-loader?minimize!sass-loader!postcss-loader'
-        })
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.js$/,

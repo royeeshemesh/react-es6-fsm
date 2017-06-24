@@ -4,9 +4,6 @@ import React from 'react';
 import View from '../rfsm/View';
 
 export default class ViewA extends View {
-  static TransitionTypes = {
-  };
-
   constructor(props) {
     super(props);
 
