@@ -14,10 +14,17 @@ import ViewB from './components/ViewB';
 import ViewC from './components/ViewC';
 import ViewD from './components/ViewD';
 
+import ActionInit from './actions/ActionInit';
+
 const viewLoadingState = new ViewState({
   name: 'View Loading State',
   view: ViewLoading,
   persist: false
+});
+
+const actionInitState = new ActionState({
+  name: 'actionInitState',
+  action: ActionInit
 });
 
 const viewAState = new ViewState({
@@ -43,7 +50,7 @@ const viewDState = new ViewState({
 viewLoadingState.transitions = [
   new Transition({
     name: ViewLoading.TransitionTypes.NEXT,
-    to: viewAState
+    to: actionInitState
   })
 ];
 
@@ -84,6 +91,13 @@ viewCState.transitions = [
 
 viewDState.transitions = [
   Transition.Back({})
+];
+
+actionInitState.transitions = [
+  new Transition({
+    name: ViewLoading.TransitionTypes.NEXT,
+    to: viewAState
+  })
 ];
 
 class App extends Component {
